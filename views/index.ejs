@@ -1,0 +1,20 @@
+<html>
+    <body>
+    <div id = "time"></div>
+    </body>
+    <script src="http://localhost:5000/socket.io/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    <script>
+        var $j = jQuery.noConflict();
+        var socket = io.connect('http://localhost:5000');
+        socket.on('displaytime',function(t){
+                $j('#time').html(t);
+                socket.emit('gettime');
+        });
+        socket.on('alert',function(){
+            alert("time over");
+        });
+        $j(function(){
+        });
+    </script>
+</html>
