@@ -1,4 +1,4 @@
-//var redis = require('redis').createClient();
+var redis = require('redis').createClient();
 var express = require('express'),http = require('http');
 var app = express();
 var server = http.createServer(app).listen(5000);
@@ -21,10 +21,12 @@ app.use(express.static(__dirname + '/'));
 
 app.get('/',function(req,res){
 	console.log("/");
-	//t = new Date();
-	res.render('index.ejs');
+	res.render('login.ejs');
 });
 
+app.get('/process',function(req,res){
+	res.render('index.ejs',{"taker":req.param('user')});
+});
 
 
 
@@ -42,6 +44,9 @@ io.sockets.on('connection',function(socket){
 		if(timer == 2) socket.emit('alert');
 		else socket.emit('displaytime',Math.floor(t/3600000)%60+' : '+timer%60+' : '+Math.floor(t/1000)%60);
 	});
+	socket.on('disconnect',function(){
+		
+	});
 });
 
 
@@ -52,15 +57,17 @@ io.sockets.on('connection',function(socket){
 
 
 /**  debug materials:
-
+//t = new Date();
 	console.log('ssssssssssssssssssssssssssssssssssssssss');
 	alert('sssss');
    setTimeout(5000);
    socket.on('connect',function(){});
-                     
+        console.log("yeah it worked");             
 		console.log(t);
 		console.log(t/1000);
 		console.log(t/60000);
 		console.log(t/3600000);
-
+		//alert(initData);
+//user.push(req.param('user'));
+//alert(username);
 **/
